@@ -23,6 +23,7 @@ struct TargetWorkspaceView: View {
     @State private var items: [TargetWorkspaceItem] = []
     @State private var showingImporter = false
     @State private var showingMenuPreview = false
+    @State private var showingInspector = false
     @State private var errorMessage: String?
 
     private var selectedItem: TargetWorkspaceItem? {
@@ -108,6 +109,9 @@ struct TargetWorkspaceView: View {
             }
         }
         .navigationTitle("Target Workspace")
+        .navigationDestination(isPresented: $showingInspector) {
+            IPAInspectorView()
+        }
         .overlay(alignment: .bottomTrailing) {
             if showingMenuPreview {
                 VStack(alignment: .leading, spacing: 12) {
@@ -128,7 +132,7 @@ struct TargetWorkspaceView: View {
                         .foregroundStyle(.secondary)
                         Button("Open IPA Inspector") {
                             // The inspector remains a separate, user-initiated static analysis screen.
-                            NotificationCenter.default.post(name: .laraOpenIPAInspector, object: nil)
+                            showingInspector = true
                         }
                         .buttonStyle(.borderedProminent)
                 }
@@ -188,6 +192,3 @@ struct TargetWorkspaceView: View {
     }
 }
 
-extension Notification.Name {
-    static let laraOpenIPAInspector = Notification.Name("lara.openIPAInspector")
-}
