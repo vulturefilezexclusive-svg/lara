@@ -29,6 +29,7 @@ struct TweaksView: View {
                 }
                 
                 Section(header: HeaderLabel(text: "Apps", icon: "app")) {
+                    NavigationLink("Target Workspace", destination: TargetWorkspaceView())
                     NavigationLink("IPA Inspector", destination: IPAInspectorView())
                     NavigationLink("Card Overwrite", destination: CardView())
                         .disabled(!mgr.vfsready)
